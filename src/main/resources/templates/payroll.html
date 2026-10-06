@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{parent :: base(~{::#content}, ~{::title})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width, initial-scale=1.0">
+    <title>Payroll</title>
+</head>
+<body>
+    <div id="content">
+        <div class="main-content">
+
+    <div class="topbar">
+        <h2>Payroll Management</h2>
+    </div>
+
+    <!-- Month Select -->
+    <form method="get" class="date-form">
+        <input type="month" name="month" th:value="${selectedMonth}">
+        <button type="submit">View</button>
+    </form>
+
+    <form th:action="@{/admin/payroll/save}" method="post">
+        <input type="hidden" name="month" th:value="${selectedMonth}">
+
+        <div class="table-container">
+            <table class="employee-table">
+
+                <thead>
+                <tr>
+                    <th>Emp ID</th>
+                    <th>Name</th>
+                    <th>Dept</th>
+                    <th>Basic</th>
+                    <th>Allowance</th>
+                    <th>Deduction</th>
+                    <th>Net Salary</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="emp : ${employees}">
+
+                    <td th:text="${emp.empId}"></td>
+                    <td th:text="${emp.name}"></td>
+                    <td th:text="${emp.department}"></td>
+
+                    <!-- Already Generated -->
+                    <th:block th:if="${payrollMap[emp.empId] != null}">
+                        <td th:text="${payrollMap[emp.empId].basicSalary}"></td>
+                        <td th:text="${payrollMap[emp.empId].allowance}"></td>
+                        <td th:text="${payrollMap[emp.empId].deduction}"></td>
+                        <td th:text="${payrollMap[emp.empId].netSalary}"></td>
+                    </th:block>
+
+                    <!-- New Payroll -->
+                    <th:block th:if="${payrollMap[emp.empId] == null}">
+                        <td>
+                            <input type="number" name="basic" class="input salary" required>
+                        </td>
+                        <td>
+                            <input type="number" name="allowance" class="input allowance" value="0">
+                        </td>
+                        <td>
+                            <input type="number" name="deduction" class="input deduction" value="0">
+                        </td>
+                        <td>
+                            <span class="net">0</span>
+                        </td>
+
+                        <input type="hidden" name="empId" th:value="${emp.empId}">
+                    </th:block>
+
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <th:block th:if="${#maps.isEmpty(payrollMap)}">
+    <button class="btn-save">💾 Save Payroll</button>
+</th:block>
+    </form>
+
+</div>
+
+<script>
+document.querySelectorAll("tr").forEach(row => {
+
+    const basic = row.querySelector(".salary");
+    const allow = row.querySelector(".allowance");
+    const ded = row.querySelector(".deduction");
+    const net = row.querySelector(".net");
+
+    function calc() {
+        if (basic && allow && ded && net) {
+            let b = parseFloat(basic.value) || 0;
+            let a = parseFloat(allow.value) || 0;
+            let d = parseFloat(ded.value) || 0;
+
+            net.innerText = (b + a - d);
+        }
+    }
+
+    if (basic) basic.addEventListener("input", calc);
+    if (allow) allow.addEventListener("input", calc);
+    if (ded) ded.addEventListener("input", calc);
+});
+</script>
+
+<style>
+    /* ===== ROOT VARIABLES ===== */
+:root {
+    --navbar-height: 50px;
+    --sidebar-width: 220px;
+
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+
+    --success: #10b981;
+    --danger: #ef4444;
+
+    --bg: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-dark: #0f172a;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--navbar-height);
+    padding: 25px;
+    background: var(--bg);
+    min-height: 100vh;
+}
+
+   .sidebar {
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--navbar-height));
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #0f172a;
+            padding: 20px;
+        }
+
+/* ===== TOPBAR ===== */
+.topbar {
+    margin-bottom: 20px;
+}
+
+.topbar h2 {
+    font-size: 24px;
+    color: var(--text-dark);
+}
+
+/* ===== FORM (MONTH SELECT) ===== */
+.date-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.date-form input {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+}
+
+.date-form button {
+    padding: 8px 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.date-form button:hover {
+    background: var(--primary-dark);
+}
+
+/* ===== TABLE CONTAINER ===== */
+.table-container {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    overflow-x: auto;
+}
+
+/* ===== TABLE ===== */
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}
+
+.employee-table th {
+    background: #f8fafc;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.employee-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* ===== INPUT FIELDS ===== */
+.input {
+    width: 90px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+}
+
+/* ===== NET SALARY ===== */
+.net {
+    font-weight: bold;
+    color: var(--success);
+}
+
+/* ===== SAVE BUTTON ===== */
+.btn-save {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+}
+
+/* ===== READ-ONLY CELLS (Generated Payroll) ===== */
+.employee-table td span {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width: 768px) {
+
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .employee-table th,
+    .employee-table td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .input {
+        width: 70px;
+    }
+
+    .btn-save {
+        width: 100%;
+    }
+}
+</style>
+
+    </div>
+</body>
+</html>

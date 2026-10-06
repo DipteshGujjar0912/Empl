@@ -1,0 +1,59 @@
+<!-- <!DOCTYPE html>
+<html lang="en" th:fragment="base(content, title)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title th:replace="${title}">Document</title>
+
+    <style>
+        .main-content {
+    flex: 1;
+    display: flex;
+}
+    </style>
+    
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div id="cont">
+        <section th:replace="${content}"></section>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en" th:fragment="base(content, title)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">Document</title>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- Page Content -->
+    <div id="cont">
+        
+        <th:block th:if="${session.loggedInUser != null and showSidebar}">
+            <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+        </th:block>
+
+        <section th:replace="${content}"></section>
+        
+    </div>
+
+    <!-- Footer -->
+    <th:block th:if="${session.loggedInUser == null}">
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </th:block>
+</body>
+</html>

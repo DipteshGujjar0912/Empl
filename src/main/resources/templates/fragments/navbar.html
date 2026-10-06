@@ -1,0 +1,238 @@
+<div th:fragment="navbar">
+<div class="navbar">
+
+    <div class="nav-left">
+        <h2 class="logo">EMS</h2>
+    </div>
+
+    <div class="nav-right" id="navLinks">
+
+    <a th:href="@{/}" class="active">Home</a>
+    <a th:href="@{/about}">About</a>
+    <a th:href="@{/contact}">Contact</a>
+
+    <!-- ❌ Show only when NOT logged in -->
+    <th:block th:if="${session.loggedInUser == null}">
+        <a th:href="@{/login}" class="btn-login">Login</a>
+        <a th:href="@{/register}" class="btn-register">Register</a>
+    </th:block>
+
+    <!-- ✅ Show when logged in -->
+    <th:block th:if="${session.loggedInUser != null}">
+        <div class="user-menu">
+            <span class="user-name">
+                👤 <span th:text="${session.loggedInUser.orgName}"></span>
+            </span>
+            
+
+            <div class="dropdown">
+                <a th:href="@{/admin/profile}">Profile</a>
+                <a th:href="@{/admin/}">Dashboard</a>
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </th:block>
+
+</div>
+
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
+
+<style>
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #0f172a;
+    color: white;
+    height: 65px;              /* 🔥 FIXED HEIGHT */
+    padding: 0 40px;           /* vertical padding काढलं */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Logo */
+.logo {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Right Menu */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;                /* 🔥 balanced spacing */
+}
+
+/* Links */
+.nav-right a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 15px;
+    position: relative;
+    transition: 0.3s;
+    padding: 6px 4px;
+}
+
+/* Hover underline */
+.nav-right a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #38bdf8;
+    left: 0;
+    bottom: -2px;
+    transition: 0.3s;
+}
+
+.nav-right a:hover::after {
+    width: 100%;
+}
+
+.nav-right a:hover {
+    color: white;
+}
+
+/* Active */
+.nav-right .active {
+    color: #38bdf8;
+}
+
+/* LOGIN BUTTON */
+.btn-login {
+    padding: 6px 16px;
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    color: #38bdf8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-login:hover {
+    background: #38bdf8;
+    color: black;
+}
+
+/* REGISTER BUTTON */
+.btn-register {
+    padding: 6px 16px;
+    background: linear-gradient(45deg, #38bdf8, #0ea5e9);
+    border-radius: 8px;
+    color: black !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-register:hover {
+    background: #0ea5e9;
+}
+
+/* Mobile Icon */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* USER MENU */
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* USER NAME BUTTON */
+.user-name {
+    padding: 6px 16px;
+    background: linear-gradient(45deg, #38bdf8, #0ea5e9);
+    color: black;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* DROPDOWN */
+.dropdown {
+    position: absolute;
+    top: 110%;              /* 🔥 navbar खाली येईल */
+    right: 0;
+    background: #1e293b;
+    border-radius: 8px;
+    min-width: 160px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    z-index: 999;
+}
+
+/* DROPDOWN LINKS */
+.dropdown a {
+    padding: 10px 14px;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.dropdown a:hover {
+    background: #334155;
+    color: #38bdf8;
+}
+
+/* SHOW DROPDOWN ON HOVER */
+.user-menu:hover .dropdown {
+    display: block;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    .nav-right {
+        position: absolute;
+        top: 65px;           /* 🔥 navbar height match */
+        right: 0;
+        background: #0f172a;
+        flex-direction: column;
+        width: 220px;
+        padding: 20px;
+        display: none;
+    }
+
+    .nav-right.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+/* 🔥 VERY IMPORTANT (Fix overlapping issue) */
+
+</style>
+
+</div>

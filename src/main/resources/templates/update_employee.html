@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{parent :: base(~{::#content}, ~{::title})}">
+<head>
+    <title>Add Employee | EMS</title>
+</head>
+
+<body>
+<div id="content">
+
+    <div class="main-content">
+
+        <!-- TOP BAR -->
+        <div class="topbar">
+            <h2>Add Employee</h2>
+            <!-- <a th:href="@{/admin/employees}" class="btn-back">← Back</a> -->
+        </div>
+
+        <!-- SUCCESS / ERROR -->
+        <p style="text-align: center; font-size: 18px; padding-bottom: 4px;" class="success" th:if="${success}" th:text="${success}"></p>
+        <p style="text-align: center; font-size: 18px; padding-bottom: 4px;" class="error" th:if="${error}" th:text="${error}"></p>
+
+        <!-- FORM CARD -->
+        <div class="form-container">
+
+            <form th:action="@{/admin/update-employee}" th:object="${employee}" method="post" novalidate>
+
+                <div class="form-grid">
+
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{organization}">
+
+                    <div class="form-group">
+                        <label>Employee ID</label>
+                        <input type="text" th:field="*{empId}" readonly placeholder="Enter ID">
+                        <small class="error" th:errors="*{empId}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" th:field="*{name}" placeholder="Enter Name">
+                        <small class="error" th:errors="*{name}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" th:field="*{email}" readonly placeholder="Enter Email">
+                        <small class="error" th:errors="*{email}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact</label>
+                        <input type="text" th:field="*{contact}" placeholder="Enter Contact">
+                        <small class="error" th:errors="*{contact}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" th:field="*{address}" placeholder="Enter Address">
+                        <small class="error" th:errors="*{address}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Department</label>
+                        <input type="text" th:field="*{department}" placeholder="Enter Department">
+                        <small class="error" th:errors="*{department}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input type="text" th:field="*{role}" placeholder="Enter Role">
+                        <small class="error" th:errors="*{role}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Salary</label>
+                        <input type="number" th:field="*{salary}" placeholder="Enter Salary">
+                        <small class="error" th:errors="*{salary}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Joining Date</label>
+                        <input type="date"th:field="*{joiningDate}">
+                        <small class="error" th:errors="*{joiningDate}"></small>
+                    </div>
+
+                </div>
+
+                <!-- BUTTON -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Save Employee</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+<style>
+
+/* ===== LAYOUT FIX ===== */
+:root {
+    --navbar-height: 65px;
+    --sidebar-width: 220px;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--navbar-height);
+    padding: 25px;
+    background: #f1f5f9;
+    min-height: 100vh;
+}
+
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--navbar-height));
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #0f172a;
+    padding: 20px;
+}
+
+/* TOPBAR */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-back {
+    text-decoration: none;
+    background: #64748b;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.btn-back:hover {
+    background: #475569;
+}
+
+/* FORM CARD */
+.form-container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 900px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* GRID */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* FORM GROUP */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+}
+
+/* BUTTON */
+.form-actions {
+    margin-top: 20px;
+}
+
+.btn-save {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: linear-gradient(45deg, #2563eb, #1e40af);
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    opacity: 0.9;
+}
+
+/* ERROR */
+.error {
+    color: #ff6b6b;
+    font-size: 12px;
+}
+
+/* SUCCESS */
+.success {
+    color: #4ade80;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* RESPONSIVE */
+@media(max-width: 768px) {
+
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+</div>
+</body>
+</html>

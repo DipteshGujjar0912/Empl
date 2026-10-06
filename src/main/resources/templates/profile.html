@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{parent :: base(~{::#content}, ~{::title})}">
+<head>
+    <title>Organization Profile | EMS</title>
+</head>
+
+<body>
+<div id="content">
+
+<div class="main-content">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2>Organization Profile</h2>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('profile')">Profile</button>
+        <button class="tab-btn" onclick="openTab('password')">Change Password</button>
+    </div>
+
+    <!-- SUCCESS / ERROR -->
+        <p style="text-align: center; font-size: 18px; padding-bottom: 4px;" class="success" th:if="${success}" th:text="${success}"></p>
+        <p style="text-align: center; font-size: 18px; padding-bottom: 4px;" class="error" th:if="${error}" th:text="${error}"></p>
+    <!-- PROFILE SECTION -->
+    <div id="profile" class="tab-content active">
+
+        <form th:action="@{/admin/update-profile}" method="post" class="form-box">
+
+            <input type="hidden" name="id" th:value="${org.id}">
+
+            <div class="grid">
+                <div>
+                    <label>Organization Name</label>
+                    <input type="text" name="orgName" th:value="${org.orgName}" required>
+                </div>
+
+                <div>
+                    <label>Organization ID</label>
+                    <input type="text" th:value="${org.orgUniqueId}" readonly>
+                </div>
+
+                <div>
+                    <label>Email</label>
+                    <input type="email" name="email" th:value="${org.email}" required>
+                </div>
+
+                <div>
+                    <label>Contact</label>
+                    <input type="text" name="contact" th:value="${org.contact}">
+                </div>
+
+                <div>
+                    <label>Type</label>
+                    <input type="text" name="type" th:value="${org.type}">
+                </div>
+
+                <div>
+                    <label>Address</label>
+                    <input type="text" name="address" th:value="${org.address}">
+                </div>
+            </div>
+
+            <button class="btn-save">Update Profile</button>
+        </form>
+    </div>
+
+    <!-- PASSWORD SECTION -->
+    <div id="password" class="tab-content">
+
+        
+
+        <form th:action="@{/admin/update-password}" method="post" class="form-box">
+
+            <div class="grid">
+                <div>
+                    <label>Old Password</label>
+                    <input type="password" name="oldPassword" required>
+                </div>
+
+                <div>
+                    <label>New Password</label>
+                    <input type="password" name="newPassword" required>
+                </div>
+
+                <div>
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirmPassword" required>
+                </div>
+            </div>
+
+            <button class="btn-save">Change Password</button>
+        </form>
+    </div>
+
+</div>
+
+<style>
+:root {
+    --navbar-height: 60px;
+    --sidebar-width: 220px;
+}
+/* ERROR */
+.error {
+    color: #ff6b6b;
+    font-size: 12px;
+}
+
+/* SUCCESS */
+.success {
+    color: #4ade80;
+    text-align: center;
+    margin-bottom: 10px;
+}
+/* MAIN */
+.main-content {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--navbar-height);
+    padding: 25px;
+    background: #f1f5f9;
+    min-height: 100vh;
+}
+.sidebar {
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--navbar-height));
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #0f172a;
+    padding: 20px;
+}
+/* TOPBAR */
+.topbar {
+    margin-bottom: 20px;
+}
+
+/* TABS */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 8px 15px;
+    border: none;
+    background: #e2e8f0;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.tab-btn.active {
+    background: #2563eb;
+    color: white;
+}
+
+/* CONTENT */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* FORM */
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* BUTTON */
+.btn-save {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background: #1e40af;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .main-content {
+        margin-left: 0;
+    }
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+function openTab(tab) {
+    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
+
+    document.getElementById(tab).classList.add("active");
+    event.target.classList.add("active");
+}
+</script>
+
+</div>
+</body>
+</html>

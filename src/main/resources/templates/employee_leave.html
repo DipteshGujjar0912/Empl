@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{parent :: base(~{::#content}, ~{::title})}">
+<head>
+    <title>Leave | EMS</title>
+</head>
+
+<body>
+<div id="content">
+
+<div class="main-content">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <h2>Leave Management</h2>
+        <a th:href="@{#}" class="btn-apply">+ Apply Leave</a>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-container">
+        <table class="leave-table">
+
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Dept</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="leave : ${leaveList}">
+
+                <td th:text="${leave.employee.name}"></td>
+                <td th:text="${leave.employee.department}"></td>
+                <td th:text="${leave.fromDate}"></td>
+                <td th:text="${leave.toDate}"></td>
+                <td th:text="${leave.reason}"></td>
+
+                <!-- STATUS -->
+                <td>
+                    <span th:class="'status ' + ${leave.status.toLowerCase()}"
+                          th:text="${leave.status}"></span>
+                </td>
+
+                <!-- ACTION -->
+                <td>
+                    <th:block th:if="${leave.status == 'Pending'}">
+                        <a th:href="@{'/admin/leave/approve/' + ${leave.id}}" class="btn approve">Approve</a>
+                        <a th:href="@{'/admin/leave/reject/' + ${leave.id}}" class="btn reject">Reject</a>
+                    </th:block>
+
+                    <th:block th:if="${leave.status != 'Pending'}">
+                        <span>-</span>
+                    </th:block>
+                </td>
+
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+<style>
+:root {
+    --navbar-height: 60px;
+    --sidebar-width: 220px;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--navbar-height);
+    padding: 25px;
+    background: #f1f5f9;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--navbar-height));
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #0f172a;
+    padding: 20px;
+}
+
+/* TOPBAR */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.topbar h2 {
+    font-size: 22px;
+    color: #0f172a;
+}
+
+/* APPLY BUTTON */
+.btn-apply {
+    background: #2563eb;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-apply:hover {
+    background: #1e40af;
+}
+
+/* TABLE */
+.table-container {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    overflow-x: auto;
+}
+
+.leave-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leave-table th,
+.leave-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.leave-table th {
+    background: #f1f5f9;
+    font-weight: 600;
+}
+
+/* STATUS COLORS */
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status.pending {
+    background: #facc15;
+    color: black;
+}
+
+.status.approved {
+    background: #22c55e;
+    color: white;
+}
+
+.status.rejected {
+    background: #ef4444;
+    color: white;
+}
+
+/* ACTION BUTTONS */
+.btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.btn.approve {
+    background: #22c55e;
+    color: white;
+}
+
+.btn.reject {
+    background: #ef4444;
+    color: white;
+}
+
+/* RESPONSIVE */
+@media(max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+}
+</style>
+
+</div>
+</body>
+</html>

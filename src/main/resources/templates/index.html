@@ -1,0 +1,169 @@
+<!-- <!DOCTYPE html><html th:replace="~{parent :: base(~{::#content}, ~{::title})}">
+<head>
+
+<title>Home</title>
+</head>
+<body>
+
+<div id="content">
+<div class="container">
+<div class="card">
+<h1>Welcome to Employee Management System</h1>
+<p>Manage employees, payroll, attendance easily.</p>
+<button onclick="location.href='register.html'">Register Organization</button>
+</div>
+</div><div class="footer">© 2026 EMS</div></div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en" th:replace="~{parent :: base(~{::#content}, ~{::title})}">
+<head>
+    <title>Home | EMS</title>
+</head>
+
+<body>
+<div id="content">
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Employee Management System</h1>
+            <p>Manage employees, attendance, and payroll with ease using our smart system.</p>
+
+            <div class="hero-buttons">
+                <a th:href="@{/register}" class="btn-primary">Get Started</a>
+                <a th:href="@{/login}" class="btn-secondary">Login</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <h2>Why Choose EMS?</h2>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>👥 Employee Management</h3>
+                <p>Add, update and manage all employees in one place.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📅 Attendance Tracking</h3>
+                <p>Track daily attendance with AI-powered system.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>💰 Payroll System</h3>
+                <p>Automate salary calculations and generate reports.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📊 Reports & Analytics</h3>
+                <p>Get insights into employee performance and attendance.</p>
+            </div>
+        </div>
+    </section>
+    <style>
+        /* HERO SECTION */
+.hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #2563eb, #1e3a8a);
+    color: white;
+    margin-top: 65px;
+}
+
+.hero-text h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hero-text p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+/* Buttons */
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: #38bdf8;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #0ea5e9;
+}
+
+.btn-secondary {
+    border: 1px solid white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: black;
+}
+
+/* FEATURES */
+.features {
+    padding: 60px 20px;
+    text-align: center;
+    background: #f8fafc;
+}
+
+.features h2 {
+    margin-bottom: 40px;
+    font-size: 28px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.feature-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+    .hero-text h1 {
+        font-size: 28px;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+}
+    </style>
+
+</div>
+</body>
+</html>

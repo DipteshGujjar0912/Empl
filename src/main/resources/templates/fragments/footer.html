@@ -1,0 +1,118 @@
+<div th:fragment="footer">
+    <div class="footer">
+
+    <div class="footer-container">
+
+        <!-- About -->
+        <div class="footer-section">
+            <h3>EMS</h3>
+            <p>Employee Management System helps you manage employees, attendance and payroll efficiently.</p>
+        </div>
+
+        <!-- Links -->
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/about}">About</a>
+            <a th:href="@{/contact}">Contact</a>
+            <a th:href="@{/login}">Login</a>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: support@ems.com</p>
+            <p>Phone: +91 98765 43210</p>
+            <p>Location: India</p>
+        </div>
+
+        <!-- Social -->
+        <div class="footer-section">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+                <a href="#">🌐</a>
+                <a href="#">📘</a>
+                <a href="#">🐦</a>
+                <a href="#">📸</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom -->
+    <div class="footer-bottom">
+        © 2026 EMS | All Rights Reserved
+    </div>
+
+</div>
+
+<style>
+    /* FOOTER */
+.footer {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 40px 20px 20px;
+}
+
+/* Container */
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+/* Sections */
+.footer-section h3,
+.footer-section h4 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Links */
+.footer-section a {
+    display: block;
+    color: #cbd5f5;
+    text-decoration: none;
+    margin-bottom: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.footer-section a:hover {
+    color: #38bdf8;
+}
+
+/* Social */
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    font-size: 18px;
+    background: #1e293b;
+    padding: 8px 10px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    background: #38bdf8;
+    color: black;
+}
+
+/* Bottom */
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #1e293b;
+    font-size: 13px;
+}
+</style>
+</div>

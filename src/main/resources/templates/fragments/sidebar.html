@@ -1,0 +1,44 @@
+<div th:fragment="sidebar">
+    <div class="sidebar">
+        <a th:href="@{/admin/}" th:classappend="${paramValue == 'dashboard'} ? 'active' : ''">🏠 Dashboard</a>
+        <a th:href="@{/admin/employees}" th:classappend="${paramValue == 'employee'} ? 'active' : ''">👥 Employees</a>
+        <a th:href="@{/admin/add-employee}" th:classappend="${paramValue == 'addEmployee'} ? 'active' : ''">+ Add Employee</a>
+        <a th:href="@{/admin/attendance}" th:classappend="${paramValue == 'attendance'} ? 'active' : ''">📅 Attendance</a>
+        <a th:href="@{/admin/leave}" th:classappend="${paramValue == 'leave'} ? 'active' : ''">📝 Leave</a>
+        <a th:href="@{/admin/payroll}" th:classappend="${paramValue == 'payroll'} ? 'active' : ''">💰 Payroll</a>
+        <a th:href="@{/logout}">🔒 Logout</a>
+    </div>
+
+    <style>
+        /* SIDEBAR */
+        .sidebar {
+            margin-top: 60px;
+            width: 220px;
+            height: 100vh;
+            position: fixed;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5f5;
+            text-decoration: none;
+            margin: 12px 0;
+            padding: 10px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+        .sidebar .active {
+            background: #2563eb;
+            color: white;
+        }
+    </style>
+</div>
